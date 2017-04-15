@@ -10,7 +10,7 @@
 DOWNLOAD_DIR="${OPENSHIFT_REPO_DIR}downloads"
 if [ \! -d "${DOWNLOAD_DIR}" ] ; then mkdir -vp "${DOWNLOAD_DIR}"; fi
 
-RUBY_VER="2.3.4"
+export RUBY_VER="2.3.4"
 TO_DOWNLOAD=("https://cache.ruby-lang.org/pub/ruby/2.3/ruby-${RUBY_VER}.tar.gz")
 
 # Retrieve files
