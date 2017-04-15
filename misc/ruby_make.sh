@@ -15,9 +15,12 @@ export CONF_DIR="${OPENSHIFT_REPO_DIR}conf"
 
 # time consuming, about 25 minutes, pass NOMAKE=1 to skip step
 # MAKE begin
+
+RUBY_TAR_PATH="ruby-${RUBY_VER}.tar.gz"
+
 if test -z "${NOMAKE}"
 then
-	pushd ${OPENSHIFT_DIY_DIR}
+	pushd ${DOWNLOAD_DIR}
 	# untar Ruby source code
 	tar -zxf "${RUBY_TAR_PATH}"
 	pushd ruby-${RUBY_VER}    # Created by previous line 

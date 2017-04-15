@@ -7,7 +7,6 @@
 # check to see if packages are up to date
 # 	download if needed
 
-DOWNLOAD_DIR="${OPENSHIFT_REPO_DIR}downloads"
 if [ \! -d "${DOWNLOAD_DIR}" ] ; then mkdir -vp "${DOWNLOAD_DIR}"; fi
 
 TO_DOWNLOAD=("https://cache.ruby-lang.org/pub/ruby/2.3/ruby-${RUBY_VER}.tar.gz")

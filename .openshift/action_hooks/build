@@ -7,6 +7,7 @@
 NOW=$(date "+%Y_%m_%d_%H_%M")
 
 export RUBY_VER="2.3.4"
+export DOWNLOAD_DIR="${OPENSHIFT_REPO_DIR}downloads"
 
 # ## ### #### ##### #### ### ## # ????????????????????
 # tell httpd to use our httpd.conf file	NEEDS: work. Is PassEnv needed?
