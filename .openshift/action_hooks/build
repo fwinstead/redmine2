@@ -6,6 +6,8 @@
 # 	runs on initial build and whenever user does a git push
 NOW=$(date "+%Y_%m_%d_%H_%M")
 
+export RUBY_VER="2.3.4"
+
 # ## ### #### ##### #### ### ## # ????????????????????
 # tell httpd to use our httpd.conf file	NEEDS: work. Is PassEnv needed?
 export HTTPD_ARGUMENT="-f ${OPENSHIFT_REPO_DIR}conf/httpd.conf"
@@ -22,7 +24,7 @@ bash ${OPENSHIFT_REPO_DIR}misc/download.sh > ${DOWNLOAD_LOG_FILE} 2>&1
 
 # ## ### #### ##### #### ### ## #
 # make Ruby if needed
-
+./app-root/runtime/repo/downloads/ruby-2.3.4.tar.gz
 
 # ## ### #### ##### #### ### ## #
 
