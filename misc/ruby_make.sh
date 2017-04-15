@@ -29,8 +29,9 @@ then
 			./configure \
 			--with-libdir=lib64 \
 			--prefix=${ROOT_DIR} 
-
+		echo "=====> Configure completion $?"
 		make -j     # maybe: make -j 2
+		echo "=====> Make completion $?"
     
 		make install
     
