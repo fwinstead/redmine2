@@ -1,0 +1,8 @@
+#!/bin/bash
+
+
+# FTW 2017-04-17
+
+httpd -f ${OPENSHIFT_REPO_DIR}conf/httpd.conf -k graceful
+
+exit 0

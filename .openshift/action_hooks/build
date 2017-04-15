@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# FTW 2017-04-17
+
+# build Redmine site on Openshift
+# 	runs on initial build and whenever user does a git push
+NOW=$(date "+%Y_%m_%d_%H_%M")
+
+# ## ### #### ##### #### ### ## # ????????????????????
+# tell httpd to use our httpd.conf file	NEEDS: work. Is PassEnv needed?
+export HTTPD_ARGUMENT="-f ${OPENSHIFT_REPO_DIR}conf/httpd.conf"
+# Included by httpd.conf
+# https://httpd.apache.org/docs/2.4/env.html
+env|>${OPENSHIFT_TMP_DIR}httpd_temp.conf awk 'BEGIN{FS="="} $1 ~ /^OPENSHIFT/ {print "PassEnv", $1}'
+# ## ### #### ##### #### ### ## # ????????????????????
+
+# ## ### #### ##### #### ### ## #
+# Check for Downloads
+DOWNLOAD_LOG_FILE="/tmp/download_${NOW}.log"
+bash ${OPENSHIFT_REPO_DIR}misc/download.sh > ${DOWNLOAD_LOG_FILE} 2>&1
+# ## ### #### ##### #### ### ## #
+
+# ## ### #### ##### #### ### ## #
+# make Ruby if needed
+
+
+# ## ### #### ##### #### ### ## #
+
+
+
+# start building
+REDMINE_INSTALL_LOG_FILE="/tmp/redmine_install_log"
+RUBY_MAKE_LOG_FILE="/tmp/ruby_make_log"
+RUBY_MAKE_PID_FILE="/tmp/ruby_make_pid"
+RUBY_MAKE_PID=$(cat "${RUBY_MAKE_PID_FILE}" 2> /dev/null) # get PID if exists
+
+# check to see if build is already running (PID file empty OR proccess no longer exists)
+if [ \! "${RUBY_MAKE_PID}" ] || [ \! -f "/proc/${RUBY_MAKE_PID}/stat" ]
+then
+	# start in background: make Ruby
+	nohup bash ${OPENSHIFT_REPO_DIR}misc/ruby_make.sh > ${RUBY_MAKE_LOG_FILE} 2>&1 &
+	echo "$!" > ${RUBY_MAKE_PID_FILE} ; echo -e "\t$(date) RUBY make started."
+	# start in background: install latest Rails/Redmine
+	# nohup bash ${OPENSHIFT_REPO_DIR}misc/rails_redmine_install.sh > ${REDMINE_INSTALL_LOG_FILE} 2>&1 &
+	# echo -e "\tRails-Redmine install started."
+else
+	echo -e "\tBuild is already in progress, PID: ${RUBY_MAKE_PID}"
+	ps -ef | grep "${RUBY_MAKE_PID}"
+fi
+
+exit
