@@ -25,12 +25,10 @@ then
 	tar -zxf "${RUBY_TAR_PATH}"
 	pushd ruby-${RUBY_VER}    # Created by previous line 
   
-		[ ! -f Makefile ] && \
-			./configure \
-			--with-libdir=lib64 \
-			--prefix=${ROOT_DIR} 
+		[ ! -f Makefile ] && ./configure --prefix=${ROOT_DIR} --with-libdir=lib64 
+			
 		echo "=====> Configure completion $?"
-		make -j     # maybe: make -j 2
+		make -j 4 # -j     # maybe: make -j 2
 		echo "=====> Make completion $?"
     
 		make install
